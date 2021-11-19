@@ -1,6 +1,5 @@
 extends Node
 
-
 export var bmp := 124
 
 var _bps := 60.0 / bmp
@@ -31,3 +30,4 @@ func _process(delta) -> void:
 	
 	if half_beat > _half_last_beat:
 		_half_last_beat = half_beat
+		Events.emit_signal("beat_incremented", {"half_beat": half_beat, "bps": _bps})
