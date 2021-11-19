@@ -1,6 +1,5 @@
 extends Node
 
-
 export var bmp := 124
 
 var _bps := 60.0 / bmp
@@ -17,6 +16,7 @@ func _ready() -> void:
 func play_audio() -> void:
 	var time_delay := AudioServer.get_output_latency() + AudioServer.get_time_to_next_mix()
 	yield(get_tree().create_timer(time_delay), "timeout")
+	
 	_stream.play()
 
 
@@ -30,3 +30,4 @@ func _process(delta) -> void:
 	
 	if half_beat > _half_last_beat:
 		_half_last_beat = half_beat
+		Events.emit_signal("beat_incremented", {"half_beat": half_beat, "bps": _bps})

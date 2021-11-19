@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_cephalopod.png-98d019563595600b6de4da2a8ca2ee66.stex"
+path="res://.import/icon_cephalopod.png-c63c24c97bfea89ea6c1a0935f24b890.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/tracks/Cephalopod/icon_cephalopod.png"
-dest_files=[ "res://.import/icon_cephalopod.png-98d019563595600b6de4da2a8ca2ee66.stex" ]
+source_file="res://src/tracks/cephalopod/icon_cephalopod.png"
+dest_files=[ "res://.import/icon_cephalopod.png-c63c24c97bfea89ea6c1a0935f24b890.stex" ]
 
 [params]
 
