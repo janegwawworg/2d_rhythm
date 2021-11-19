@@ -10,6 +10,9 @@ func _ready() -> void:
 	
 func _spawner_beat(msg: Dictionary) -> void:
 	
+	if not enable:
+		return
+	
 	if msg.half_beat % 2:
 		return
 		
