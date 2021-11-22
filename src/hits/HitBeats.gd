@@ -23,6 +23,7 @@ onready var _sprite := $Sprite
 onready var _area2d := $Area2D
 onready var _animate := $AnimationPlayer
 onready var _label := $LabelCustom
+onready var _target := $TargetCircle
 
 
 func _ready() -> void:
@@ -51,6 +52,7 @@ func setup(data: Dictionary) -> void:
 	global_position = data.global_position
 	_sprite.frame = data.color
 	_speed = 1.0 / data.bps / _beat_delay
+	_target.setup(_radius_start, _radius_perfect, data.bps, _beat_delay)
 
 
 func _get_score() -> int:
