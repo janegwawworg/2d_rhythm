@@ -1,8 +1,8 @@
 extends Position2D
 
-var _FRAME_PERFECT := 3
-var _FRAME_GREAT := 2
-var _FRAME_OK := 1
+const _FRAME_PERFECT := 3
+const _FRAME_GREAT := 2
+const _FRAME_OK := 1
 
 onready var _sprite := $Sprite
 onready var _particles := $Particles2D

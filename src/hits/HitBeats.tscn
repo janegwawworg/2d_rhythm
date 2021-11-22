@@ -1,8 +1,17 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/ui/LabelCustom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/hits/hit_sprites.png" type="Texture" id=2]
 [ext_resource path="res://src/hits/HitBeats.gd" type="Script" id=3]
+[ext_resource path="res://src/hits/TargetCircle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/hits/target_circle.shader" type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/torus_thickness = 0.015
+shader_param/torus_hardness = -2.0
+shader_param/torus_radius = 0.5
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 75.0
@@ -70,6 +79,10 @@ tracks/0/keys = {
 
 [node name="HitBeats" type="Node2D"]
 script = ExtResource( 3 )
+
+[node name="TargetCircle" parent="." instance=ExtResource( 4 )]
+material = SubResource( 5 )
+mouse_filter = 2
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
