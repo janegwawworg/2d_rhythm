@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/editor/icon_beats.png" type="Texture" id=1]
+[ext_resource path="res://src/editor/PlacerHitBeat.gd" type="Script" id=2]
+[ext_resource path="res://src/hits/HitBeats.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ui/LabelCustom.tscn" type="PackedScene" id=4]
+
+[node name="PlacerHitBeat" type="Node2D"]
+script = ExtResource( 2 )
+scene = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 4
+frame = 1
+
+[node name="LabelCustom" parent="." instance=ExtResource( 4 )]
+text = "1"

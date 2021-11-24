@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "PlacerHitBeat",
+"language": "GDScript",
+"path": "res://src/editor/PlacerHitBeat.gd"
+}, {
+"base": "Node2D",
+"class": "PlacerRest",
+"language": "GDScript",
+"path": "res://src/editor/PlacerRest.gd"
+} ]
+_global_script_class_icons={
+"PlacerHitBeat": "res://src/editor/placer_hit_beat_icon.svg",
+"PlacerRest": "res://src/editor/placer_rest_icon.svg"
+}
+
 [application]
 
 config/name="2d_rhythm"
