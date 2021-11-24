@@ -94,6 +94,7 @@ hframes = 6
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
 anims/RESET = SubResource( 4 )
 anims/destroy = SubResource( 2 )
 anims/show = SubResource( 3 )
