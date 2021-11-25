@@ -14,5 +14,5 @@ texture = ExtResource( 1 )
 hframes = 4
 frame = 1
 
-[node name="LabelCustom" parent="." instance=ExtResource( 4 )]
+[node name="OrderNumber" parent="." instance=ExtResource( 4 )]
 text = "1"

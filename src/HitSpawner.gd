@@ -4,20 +4,38 @@ export var enable := true
 export var hit_beat: PackedScene
 
 var _stack_current := []
+var _stacks := {}
+
+onready var _patterns := $Patterns
 
 
 func _ready() -> void:
 	Events.connect("beat_incremented", self, "_spawner_beat")
 	_generate_stack()
+	_select_stack({name = "Cephalopod"})
 
 
 func _generate_stack() -> void:
-	for i in range(10):
-		var hit_beat_data := {}
-		if i % 2 == 1:
-			hit_beat_data.color = int(rand_range(0, 5))
-			hit_beat_data.global_position = i * Vector2(100, 100)
-		_stack_current.append(hit_beat_data)
+	for pattern in _patterns.get_children():
+		_stacks[pattern.name] = []
+		
+		for chunk in pattern.get_children():
+			var sprite_frame = round(rand_range(0, 5))
+			
+			for placer in chunk.get_children():
+				var hit_beat_data: Dictionary= placer.get_data()
+				hit_beat_data.color = sprite_frame
+				_stacks[pattern.name].append(hit_beat_data)
+				
+				for i in range(hit_beat_data.duration - 1):
+					_stacks[pattern.name].append({})
+					
+	_patterns.queue_free()
+
+
+func _select_stack(msg: Dictionary) -> void:
+	print(_stacks)
+	_stack_current = _stacks[msg.name]
 
 
 func _spawner_beat(msg: Dictionary) -> void:
