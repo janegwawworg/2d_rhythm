@@ -34,7 +34,6 @@ func _generate_stack() -> void:
 
 
 func _select_stack(msg: Dictionary) -> void:
-	print(_stacks)
 	_stack_current = _stacks[msg.name]
 
 
