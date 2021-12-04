@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "PlacerRest",
 "language": "GDScript",
 "path": "res://src/editor/PlacerRest.gd"
+}, {
+"base": "Resource",
+"class": "TrackData",
+"language": "GDScript",
+"path": "res://src/tracks/TrackData.gd"
 } ]
 _global_script_class_icons={
 "PlacerHitBeat": "res://src/editor/placer_hit_beat_icon.svg",
-"PlacerRest": "res://src/editor/placer_rest_icon.svg"
+"PlacerRest": "res://src/editor/placer_rest_icon.svg",
+"TrackData": ""
 }
 
 [application]

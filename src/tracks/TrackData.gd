@@ -1,0 +1,13 @@
+extends Resource
+class_name TrackData
+
+export var label := "Track Name"
+export (String, FILE, "*.ogg") var stream
+export var bpm := 1
+export var icon: Texture
+export var artist := "Artist"
+
+func as_dict() -> Dictionary:
+	return {
+		"name": label, "stream": stream, "bpm": bpm, "icon": icon, "artist": artist
+	}
