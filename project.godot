@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "TrackData",
 "language": "GDScript",
 "path": "res://src/tracks/TrackData.gd"
+}, {
+"base": "Area2D",
+"class": "TrackTile",
+"language": "GDScript",
+"path": "res://src/ui/ui_track_selector/TrackTile.gd"
 } ]
 _global_script_class_icons={
 "PlacerHitBeat": "res://src/editor/placer_hit_beat_icon.svg",
 "PlacerRest": "res://src/editor/placer_rest_icon.svg",
-"TrackData": ""
+"TrackData": "",
+"TrackTile": ""
 }
 
 [application]
