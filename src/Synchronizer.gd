@@ -1,8 +1,8 @@
 extends Node
 
-export var bmp := 124
+export var bpm := 124
 
-var _bps := 60.0 / bmp
+var _bps := 60.0 / bpm
 var _hbps := _bps * 0.5
 var _half_last_beat := 0
 
@@ -10,7 +10,7 @@ onready var _stream := $AudioStreamPlayer2D
 
 
 func _ready() -> void:
-	play_audio()
+	Events.connect("track_selected", self, "_load_track")
 
 
 func play_audio() -> void:
@@ -31,3 +31,10 @@ func _process(delta) -> void:
 	if half_beat > _half_last_beat:
 		_half_last_beat = half_beat
 		Events.emit_signal("beat_incremented", {"half_beat": half_beat, "bps": _bps})
+
+func _load_track(msg: Dictionary) -> void:
+	_stream.stream = load(msg.stream)
+	bpm = msg.bpm
+	_bps = 60.0 / bpm
+	_hbps = _bps * 0.5
+	play_audio()

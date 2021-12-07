@@ -7,6 +7,6 @@
 script = ExtResource( 1 )
 label = "Cephalopod"
 stream = "res://src/tracks/cephalopod/Cephalopod.ogg"
-bpm = 1
+bpm = 124
 icon = ExtResource( 2 )
 artist = "Kevin"
