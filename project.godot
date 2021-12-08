@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "DragDetector",
+"language": "GDScript",
+"path": "res://src/ui/ui_track_selector/DragDetector.gd"
+}, {
 "base": "Node2D",
 "class": "PlacerHitBeat",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://src/ui/ui_track_selector/TrackTile.gd"
 } ]
 _global_script_class_icons={
+"DragDetector": "",
 "PlacerHitBeat": "res://src/editor/placer_hit_beat_icon.svg",
 "PlacerRest": "res://src/editor/placer_rest_icon.svg",
 "TrackData": "",
