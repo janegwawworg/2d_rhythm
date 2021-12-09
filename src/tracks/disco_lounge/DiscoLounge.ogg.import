@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/DiscoLounge.ogg-745f8930d92986b57fa51f8d0d563275.oggstr"
+
+[deps]
+
+source_file="res://src/tracks/disco_lounge/DiscoLounge.ogg"
+dest_files=[ "res://.import/DiscoLounge.ogg-745f8930d92986b57fa51f8d0d563275.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

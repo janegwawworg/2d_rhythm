@@ -5,10 +5,6 @@ var _current_track_data: TrackData
 onready var _track_name := $TrackName
 onready var _stream := $AudioStreamPlayer
 onready var _anim_play := $AnimationPlayer
-
-
-func _ready() -> void:
-	update_track_info($TrackCarousel/TrackTiles.get_child(0))
 	
 	
 func update_track_info(track_tile: TrackTile) -> void:
