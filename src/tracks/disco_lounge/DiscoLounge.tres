@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/tracks/TrackData.gd" type="Script" id=1]
+[ext_resource path="res://src/tracks/disco_lounge/icon_disco_lounge.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+label = "DiscoLounge"
+stream = "res://src/tracks/disco_lounge/DiscoLounge.ogg"
+bpm = 124
+icon = ExtResource( 2 )
+artist = "disco"

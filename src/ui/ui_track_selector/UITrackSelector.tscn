@@ -1,0 +1,136 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://src/ui/ui_track_selector/TrackTiles.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/LabelCustom.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/ui_track_selector/button_go_normal.png" type="Texture" id=3]
+[ext_resource path="res://src/ui/ui_track_selector/button_go_hover.png" type="Texture" id=4]
+[ext_resource path="res://src/ui/background_shapes.png" type="Texture" id=5]
+[ext_resource path="res://src/tracks/cephalopod/cephalopod.tres" type="Resource" id=6]
+[ext_resource path="res://src/ui/ui_track_selector/TrackTile.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/ui/ui_track_selector/UITrackSelector.gd" type="Script" id=8]
+[ext_resource path="res://src/ui/ui_track_selector/DragDetector.gd" type="Script" id=9]
+[ext_resource path="res://src/ui/ui_track_selector/SelectArea.gd" type="Script" id=10]
+[ext_resource path="res://src/tracks/disco_lounge/DiscoLounge.tres" type="Resource" id=11]
+[ext_resource path="res://src/tracks/werq/werq.tres" type="Resource" id=12]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 960, 224 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 23, 190 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_in_track"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 3,
+"values": [ 0.0, 3.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "fade_out_track"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 3,
+"values": [ 0.0, -80.0 ]
+}
+
+[node name="UITrackSelector" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer"]
+texture = ExtResource( 5 )
+centered = false
+
+[node name="TrackCarousel" type="Position2D" parent="."]
+position = Vector2( 960, 240 )
+
+[node name="TrackTiles" type="Node2D" parent="TrackCarousel"]
+script = ExtResource( 1 )
+tracks = [ ExtResource( 6 ), ExtResource( 11 ), ExtResource( 12 ) ]
+track_tile_scene = ExtResource( 7 )
+
+[node name="AlignTimer" type="Timer" parent="TrackCarousel/TrackTiles"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Tween" type="Tween" parent="TrackCarousel/TrackTiles"]
+
+[node name="DragDetector" type="Area2D" parent="TrackCarousel"]
+monitorable = false
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrackCarousel/DragDetector"]
+position = Vector2( 0, -16 )
+shape = SubResource( 4 )
+
+[node name="SelectArea" type="Area2D" parent="TrackCarousel"]
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrackCarousel/SelectArea"]
+position = Vector2( 8, -16 )
+shape = SubResource( 5 )
+
+[node name="TrackName" parent="." instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.0
+margin_right = 286.0
+text = "Cephalopod"
+autowrap = true
+clip_text = true
+
+[node name="GoButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -170.0
+margin_top = -373.0
+margin_right = 170.0
+margin_bottom = -33.0
+texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_in_track = SubResource( 2 )
+anims/fade_out_track = SubResource( 3 )
+
+[connection signal="timeout" from="TrackCarousel/TrackTiles/AlignTimer" to="TrackCarousel/TrackTiles" method="_on_AlignTimer_timeout"]
+[connection signal="dragged" from="TrackCarousel/DragDetector" to="TrackCarousel/TrackTiles" method="_on_DragDetector_dragged"]
+[connection signal="input_event" from="TrackCarousel/DragDetector" to="TrackCarousel/DragDetector" method="_on_Area2D_input_event"]
+[connection signal="area_entered" from="TrackCarousel/SelectArea" to="TrackCarousel/SelectArea" method="_on_SelectArea_area_entered"]
+[connection signal="track_selected" from="TrackCarousel/SelectArea" to="." method="update_track_info"]
+[connection signal="track_selected" from="TrackCarousel/SelectArea" to="TrackCarousel/TrackTiles" method="_on_SelectArea_track_selected"]
+[connection signal="pressed" from="GoButton" to="." method="_on_GoButton_pressed"]

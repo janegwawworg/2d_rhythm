@@ -16,7 +16,7 @@ func set_duration(value: int) -> void:
 
 func _enter_tree() -> void:
 	_order_number = get_index() + 1
-	$LabelCustom.text = str(_order_number)
+	$OrderNumber.text = str(_order_number)
 	
 	
 func get_data() -> Dictionary:
