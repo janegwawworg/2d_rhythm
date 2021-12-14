@@ -31,11 +31,6 @@ func submit_score() -> void:
 	Events.emit_signal("score", { "score": _score, "global_position": global_position})
 
 
-func _add_score() -> void:
-	if _is_entered_roll && Input.is_action_pressed("touch"):
-		_score += 1
-
-
 func _on_Roller_mouse_entered():
 	_is_entered_roll = true
 
@@ -45,4 +40,5 @@ func _on_Roller_mouse_exited():
 
 
 func _on_Timer_timeout():
-	pass # Replace with function body.
+	if _is_entered_roll && Input.is_action_pressed("touch"):
+		_score += 1
