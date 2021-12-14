@@ -9,6 +9,7 @@ onready var _sprite_end := $SpriteEnd
 onready var _sprite_end_label := $SpriteEnd/Label
 onready var _anim_player := $AnimationPlayer
 onready var _grow_line := $GrowingLine
+onready var _roller := $RollerFollow/Roller
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,7 +17,7 @@ func _ready() -> void:
 	_anim_player.play("show")
 	
 	
-	setup({"global_position": global_position, "order_number": 1, "color": 2})
+	setup({"global_position": global_position, "order_number": 1, "color": 2, "bps": 1, "duration": 4})
 
 
 func set_order_number(order: int) -> void:
@@ -38,6 +39,7 @@ func setup(data: Dictionary) -> void:
 	
 	_grow_line.setup(curve_points)
 	_grow_line.start()
+	_roller.setup(data.bps, data.duration, data.color)
 
 
 func _destroy() -> void:

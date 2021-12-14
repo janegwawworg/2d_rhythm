@@ -1,14 +1,16 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/ui/LabelCustom.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/hits/hit_sprites.png" type="Texture" id=3]
 [ext_resource path="res://src/hits/hit_roller/HitRoller.gd" type="Script" id=4]
 [ext_resource path="res://src/hits/hit_roller/GrowingLine.gd" type="Script" id=5]
+[ext_resource path="res://src/hits/hit_roller/Roller.gd" type="Script" id=6]
+[ext_resource path="res://src/hits/hit_roller/roller_sprites.png" type="Texture" id=7]
 
 [sub_resource type="Curve2D" id=6]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 48.3943, 36.8717, -108.641, -21.2848, 108.641, 21.2848, 229.066, 268.636, -94.156, 33.1096, 94.156, -33.1096, 663.539, 124.31, 0, 0, 0, 0, 938.849, 384.519 )
+"points": PoolVector2Array( 0, 0, 0, 0, 48.3943, 36.8717, -108.641, -21.2848, 108.641, 21.2848, 229.066, 268.636, -101.399, -2.36501, 101.399, 2.36501, 663.539, 124.31, 0, 0, 0, 0, 938.849, 384.519 )
 }
 
 [sub_resource type="DynamicFont" id=5]
@@ -76,14 +78,14 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 90.0
+
 [node name="HitRoller" type="Path2D"]
 position = Vector2( 102, 112 )
 scale = Vector2( 0.929862, 0.949239 )
 curve = SubResource( 6 )
 script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="GrowingLine" type="Line2D" parent="."]
 width = 48.0
@@ -132,4 +134,26 @@ anims/RESET = SubResource( 4 )
 anims/destroy = SubResource( 2 )
 anims/show = SubResource( 3 )
 
+[node name="RollerFollow" type="PathFollow2D" parent="."]
+position = Vector2( 48.3943, 36.8717 )
+rotation = 1.22861
+
+[node name="Roller" type="Area2D" parent="RollerFollow"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RollerFollow/Roller"]
+shape = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="RollerFollow/Roller"]
+scale = Vector2( 1, 1 )
+texture = ExtResource( 7 )
+hframes = 6
+
+[node name="Timer" type="Timer" parent="RollerFollow/Roller"]
+
+[node name="Tween" type="Tween" parent="RollerFollow/Roller"]
+
 [connection signal="timeout" from="GrowingLine/Timer" to="GrowingLine" method="_on_Timer_timeout"]
+[connection signal="mouse_entered" from="RollerFollow/Roller" to="RollerFollow/Roller" method="_on_Roller_mouse_entered"]
+[connection signal="mouse_exited" from="RollerFollow/Roller" to="RollerFollow/Roller" method="_on_Roller_mouse_exited"]
+[connection signal="timeout" from="RollerFollow/Roller/Timer" to="RollerFollow/Roller" method="_on_Timer_timeout"]
