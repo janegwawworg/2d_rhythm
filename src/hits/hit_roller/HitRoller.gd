@@ -25,6 +25,7 @@ func set_order_number(order: int) -> void:
 
 
 func setup(data: Dictionary) -> void:
+	curve = data.curve
 	var curve_points := curve.get_baked_points()
 	_sprite_start.position = curve_points[0]
 	_sprite_end.position = curve_points[curve_points.size() - 1]
@@ -39,7 +40,7 @@ func setup(data: Dictionary) -> void:
 	_grow_line.start()
 	_roller.setup(data.bps, data.duration, data.color)
 	_roller_follow.setup(data.bps * _beat_delay, data.bps * data.duration)
-
+	
 
 func destroy() -> void:
 	_anim_player.play("destroy")

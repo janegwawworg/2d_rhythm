@@ -1,7 +1,6 @@
 extends Node
 
 export var enable := true
-export var hit_beat: PackedScene
 
 var _stack_current := []
 var _stacks := {}
@@ -54,7 +53,7 @@ func _spawner_beat(msg: Dictionary) -> void:
 	hit_beat_data.bps = msg.bps
 	hit_beat_data.half_beat = msg.half_beat
 	
-	var new_beat: Node = hit_beat.instance()
+	var new_beat: Node = hit_beat_data.scene.instance()
 	add_child(new_beat)
 	
 	new_beat.setup(hit_beat_data)

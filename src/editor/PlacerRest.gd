@@ -1,6 +1,5 @@
 tool
 extends Node2D
-
 class_name PlacerRest, "res://src/editor/placer_rest_icon.svg"
 
 export (int, 1, 4) var duration := 2 setget set_duration
