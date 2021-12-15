@@ -1,6 +1,5 @@
 tool
 extends Node2D
-
 class_name PlacerHitBeat, "res://src/editor/placer_hit_beat_icon.svg"
 
 export var scene: PackedScene

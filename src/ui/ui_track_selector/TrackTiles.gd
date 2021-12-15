@@ -14,11 +14,17 @@ onready var _tween := $Tween
 
 func _ready() -> void:
 	_generate_tiles()
+	_update_tile_visuals()
 	
 	
 func _unhandled_input(event) -> void:
 	if event.is_action_released("touch"):
 		_align_timer.start()
+
+
+func _process(delta: float) -> void:
+	if _tween.is_active():
+		_update_tile_visuals()
 
 
 func _generate_tiles() -> void:
@@ -41,6 +47,7 @@ func _generate_tiles() -> void:
 func _scroll(amount: Vector2) -> void:
 	position.x = clamp(position.x + amount.x, _min_x_position, 0)
 	_tween.stop_all()
+	_update_tile_visuals()
 
 
 func _on_DragDetector_dragged(amount: Vector2) -> void:
@@ -68,3 +75,17 @@ func _on_SelectArea_track_selected(track_tile: TrackTile) -> void:
 
 func _on_AlignTimer_timeout() -> void:
 	_snap_to_track(_selected_track_tile)
+
+
+func _update_tile_visuals() -> void:
+	var carousel_position_x: float = get_parent().global_position.x
+	for track_tile in _track_tiles:
+		var distance_to_view_center := abs(track_tile.global_position.x -
+		carousel_position_x)
+		
+		var distance_normalized = range_lerp(
+			distance_to_view_center, 0.0, carousel_position_x, 0.0, 1
+		)
+		
+		track_tile.scale = Vector2.ONE * (1.0 - distance_normalized)
+		track_tile.modulate.a = (1.0 - pow(distance_normalized, 3.0))

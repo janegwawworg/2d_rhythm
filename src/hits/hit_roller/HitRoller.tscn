@@ -1,0 +1,159 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://src/ui/LabelCustom.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/ui/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/hits/hit_sprites.png" type="Texture" id=3]
+[ext_resource path="res://src/hits/hit_roller/HitRoller.gd" type="Script" id=4]
+[ext_resource path="res://src/hits/hit_roller/GrowingLine.gd" type="Script" id=5]
+[ext_resource path="res://src/hits/hit_roller/Roller.gd" type="Script" id=6]
+[ext_resource path="res://src/hits/hit_roller/roller_sprites.png" type="Texture" id=7]
+[ext_resource path="res://src/hits/hit_roller/RollerFollow.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=5]
+size = 90
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "destroy"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "show"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 90.0
+
+[node name="HitRoller" type="Path2D"]
+position = Vector2( 102, 112 )
+scale = Vector2( 0.929862, 0.949239 )
+curve = null
+script = ExtResource( 4 )
+
+[node name="GrowingLine" type="Line2D" parent="."]
+width = 48.0
+default_color = Color( 0.4, 0.501961, 1, 0.301961 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="GrowingLine"]
+
+[node name="Tween" type="Tween" parent="GrowingLine"]
+
+[node name="SpriteStart" type="Sprite" parent="."]
+position = Vector2( 48.3943, 37.3529 )
+texture = ExtResource( 3 )
+hframes = 6
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" parent="SpriteStart" instance=ExtResource( 1 )]
+custom_fonts/font = SubResource( 5 )
+
+[node name="SpriteEnd" type="Sprite" parent="."]
+position = Vector2( 937, 386 )
+texture = ExtResource( 3 )
+hframes = 6
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" parent="SpriteEnd" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -150.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+anims/RESET = SubResource( 4 )
+anims/destroy = SubResource( 2 )
+anims/show = SubResource( 3 )
+
+[node name="RollerFollow" type="PathFollow2D" parent="."]
+position = Vector2( 48.3943, 36.8717 )
+rotation = 1.22861
+script = ExtResource( 8 )
+
+[node name="Tween" type="Tween" parent="RollerFollow"]
+
+[node name="Roller" type="Area2D" parent="RollerFollow"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RollerFollow/Roller"]
+shape = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="RollerFollow/Roller"]
+texture = ExtResource( 7 )
+hframes = 6
+
+[node name="Timer" type="Timer" parent="RollerFollow/Roller"]
+
+[node name="Tween" type="Tween" parent="RollerFollow/Roller"]
+
+[connection signal="timeout" from="GrowingLine/Timer" to="GrowingLine" method="_on_Timer_timeout"]
+[connection signal="roller_completed" from="RollerFollow" to="." method="destroy"]
+[connection signal="roller_completed" from="RollerFollow" to="RollerFollow/Roller" method="submit_score"]
+[connection signal="mouse_entered" from="RollerFollow/Roller" to="RollerFollow/Roller" method="_on_Roller_mouse_entered"]
+[connection signal="mouse_exited" from="RollerFollow/Roller" to="RollerFollow/Roller" method="_on_Roller_mouse_exited"]
+[connection signal="timeout" from="RollerFollow/Roller/Timer" to="RollerFollow/Roller" method="_on_Timer_timeout"]
